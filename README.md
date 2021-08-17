@@ -1,4 +1,4 @@
-### Vyhledávač cest
+# Vyhledávač cest
 
 
 ([odkaz na zadání](https://github.com/xtompok/prg2_20/tree/main/du03))
