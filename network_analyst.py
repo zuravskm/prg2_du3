@@ -33,6 +33,47 @@ def load_info():
     return (input, output_path, start_lat, start_lon, end_lat, end_lon)
 
 ###########################################################################
-given_info = load_info() # zde je entice s overenymi vstupnimi udaji
-print(given_info)
 
+# nacteni a kontrola dat
+given_info = load_info() # zde je entice s overenymi vstupnimi udaji
+# print(given_info)
+
+gdf_object = given_info[0]
+# print(gdf_object)
+output = given_info[1]
+coords_start = given_info[2:4]
+# print("start", coords_start)
+coords_end = given_info[4:6]
+# print("end", coords_end)
+
+# vytvoreni grafu
+G = nx.Graph()
+
+# iterace
+for idx,r in gdf_object.iterrows():
+    coords = r.geometry.coords
+    # Remember last point for creating edges
+    mempoint = r.geometry.coords[0]
+    # Add edges (starting from second point, first we have in mempoint)
+    for point in r.geometry.coords[1:]:
+        # Point is a tuple containing coordinates -> it can be used as node name
+        G.add_edge(mempoint,point)
+
+        length = math.hypot((mempoint[0]-point[0]),(mempoint[1]-point[1]))
+
+        # Add the index of the feature as edge attribute
+        G.edges[mempoint,point]['index'] = idx
+
+        G.edges[mempoint,point]['length'] = length
+
+        # Update the last point
+        mempoint = point
+
+# point = list(G.nodes)[0] 
+# print(point)
+
+# pridat neco pro logicke usporadani grafu
+
+# vykresleni grafu
+nx.draw(G)
+plt.show()
