@@ -1,6 +1,9 @@
 import sys
 import fiona
 import geopandas
+import networkx as nx
+import math
+import matplotlib.pyplot as plt
 
 def load_info():
     input_path = "A:/skola_uk/8_SEMESTR/prg_II/ukol3/data/silnice_data50.shp"  #sys.argv[1] ve finalnim skriptu zde budou argumenty z prikazovy radky -- sys.argv 
