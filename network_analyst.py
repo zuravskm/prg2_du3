@@ -9,6 +9,18 @@ def load_info():
     start_lon = 10 #sys.argv[4]
     end_lat = 10 #sys.argv[5]
     end_lon = 10 #sys.argv[6]
+    
+    # souradnice bodu primo na ceste
+    # start_lat = 50.1035841276 #sys.argv[3] definice bodů, zemepisna sirka a delka...
+    # start_lon = 14.4434777766 #sys.argv[4]
+    # end_lat = 50.1009957377 #sys.argv[5]
+    # end_lon = 14.4527108553 #sys.argv[6]
+
+    # souradnice bodu mimo cestu
+    # start_lat = 50.103600774 #sys.argv[3] definice bodů, zemepisna sirka a delka...
+    # start_lon = 14.4436590254 #sys.argv[4]
+    # end_lat = 50.1009953013 #sys.argv[5]
+    # end_lon = 14.4529370504 #sys.argv[6]
 
     # input paths to files
     try:
