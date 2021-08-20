@@ -84,8 +84,11 @@ for idx,r in gdf_object.iterrows():
         # Update the last point
         mempoint = point
 
+# nalezeni nejblizsiho uzlu zadanym bodum
 # point = list(G.nodes)[0] 
 # print(point)
+
+# nejkratsi cesta
 
 # pridat neco pro logicke usporadani grafu
 
