@@ -90,8 +90,9 @@ for idx,r in gdf_object.iterrows():
 
 # nejkratsi cesta
 
-# pridat neco pro logicke usporadani grafu
+# logicke usporadani/vykresleni grafu
+pos = {n:n for n in G.nodes}
 
 # vykresleni grafu
-nx.draw(G)
+nx.draw(G, pos=pos)
 plt.show()
