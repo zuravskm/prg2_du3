@@ -10,7 +10,7 @@ Markéta: Update - přidaly jsme tvorbu grafu, výpočet nejkratší cesty; fung
 
 Dále k řešení 
 - nalezení nejbližších bodů na síti zadaným bodům (pokusím se vyřešit o víkendu)
-- export vysledné cesty do GeoJSON
+- export vysledné cesty do GeoJSON ((https://networkx.org/documentation/stable/reference/readwrite/json_graph.html))
 - bonusy :)
 
 
