@@ -49,7 +49,7 @@ def load_info():
 
 ###########################################################################
 
-# nacteni a kontrola dat
+### nacteni a kontrola dat
 given_info = load_info() # zde je entice s overenymi vstupnimi udaji
 # print(given_info)
 
