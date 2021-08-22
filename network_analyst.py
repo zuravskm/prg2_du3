@@ -4,6 +4,7 @@ import geopandas
 import networkx as nx
 import math
 import matplotlib.pyplot as plt
+from collections import OrderedDict
 
 def load_info():
     input_path = "A:/skola_uk/8_SEMESTR/prg_II/ukol3/data/silnice_data50.shp"  #sys.argv[1] ve finalnim skriptu zde budou argumenty z prikazovy radky -- sys.argv 
@@ -47,6 +48,28 @@ def load_info():
 
     return (input, output_path, start_lat, start_lon, end_lat, end_lon)
 
+
+def point_distance(point, graph_point): # point(x,y), graph_point(y,x) -- u grafu jsou souradnice obracene!
+    dist = sqrt(((point[0]-graph_point[1])**2) + ((point[1]-graph_point[0])**2)) 
+    return dist
+
+
+def closest_point(point, graph):
+    dict_nodes = {} # {dist:'coords'}
+
+    for node in list(graph.nodes):
+        distance = point_distance(point, node)
+        dict_nodes[distance] = node
+    
+    # sorted(dict_nodes)
+    # sorted(dict_nodes.items())
+    OrderedDict(sorted(dict_nodes.items(), key=lambda t: t[1])) # t: t[1] by melo radit obracene, ale nefunguje :(
+    print(dict_nodes)
+    closest = dict_nodes.popitem()
+    closest_coords = closest[1]
+    return closest_coords
+
+
 ###########################################################################
 
 ### nacteni a kontrola dat
@@ -84,16 +107,17 @@ for idx,r in gdf_object.iterrows():
 
         
 ### nalezeni nejblizsiho uzlu zadanym bodum
-# point = list(G.nodes)[0] 
-# print(point)
+start_point = closest_point(coords_start, G)
+end_point = closest_point(coords_end, G)
+print("start:", start_point, ", end:", end_point)
 
 
 ### hledani nejkratsi cesty
-start_point = list(G.nodes)[0] # zde bude nejblizsi bod z predchoziho vypoctu
-end_point = list(G.nodes)[20] # zde bude nejblizsi bod z predchoziho vypoctu
+start_point_try = list(G.nodes)[0] # konkretni uzly grafu pro vyzkouseni funkcnosti
+end_point_try = list(G.nodes)[20]
 
 # vypocet nejkratsi cesty
-path = nx.shortest_path(G, start_point, end_point, weight='length')
+path = nx.shortest_path(G, start_point_try, end_point_try, weight='length') # zde bude nejblizsi bod z predchoziho vypoctu start_point a end_point
 
 
 ### pro kontrolu vykresleni cesty do grafu
