@@ -10,7 +10,7 @@ Markéta: Update - přidaly jsme tvorbu grafu, výpočet nejkratší cesty; fung
 
 Dále k řešení 
 - nalezení nejbližších bodů na síti zadaným bodům (skoro hotovo, ale ve funkci se mi nedaří setřídit slovník, nevim proč, nefunguje mi fce sort -- kdyby někoho napadlo, proč tomu tak je, budu ráda :) nebo kdyby někoho napadlo elegantnější řešení... Anička našla např. [zde](https://stackoverflow.com/questions/61304137/finding-the-closest-coordinates-to-a-point?noredirect=1&lq=1), mně se ale nějak nepovedlo udělat něco podobného v našem skriptu)
-- export vysledné cesty do GeoJSON -- našla jsem k tomu např. [odkaz](https://networkx.org/documentation/stable/reference/readwrite/json_graph.html)
+- export vysledné cesty do GeoJSON -- možná by se dalo použít něco z tohoto [odkazu](https://networkx.org/documentation/stable/reference/readwrite/json_graph.html)
 - bonusy :)
 
 
