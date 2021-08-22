@@ -9,7 +9,7 @@ Markéta: Update - přidaly jsme tvorbu grafu, výpočet nejkratší cesty; fung
 Dále k řešení - nalezení nejbližších bodů na síti zadaným bodům. (pokusím se vyřešit o víkendu)
 
 
-Testová data jsou v souboru test_data.geojson (jsou to data Holešovic ze cvičení :) ).
+Testová data jsou v souboru testdata.geojson (jsou to data Holešovic ze cvičení :) ).
 
 
 ([odkaz na zadání](https://github.com/xtompok/prg2_20/tree/main/du03))
