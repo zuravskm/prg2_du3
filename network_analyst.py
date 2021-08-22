@@ -61,7 +61,8 @@ coords_start = given_info[2:4]
 coords_end = given_info[4:6]
 # print("end", coords_end)
 
-# vytvoreni grafu
+
+### vytvoreni grafu
 G = nx.Graph()
 
 # iterace
@@ -84,15 +85,36 @@ for idx,r in gdf_object.iterrows():
         # Update the last point
         mempoint = point
 
-# nalezeni nejblizsiho uzlu zadanym bodum
+        
+### nalezeni nejblizsiho uzlu zadanym bodum
 # point = list(G.nodes)[0] 
 # print(point)
 
-# nejkratsi cesta
+
+### hledani nejkratsi cesty
+start_point = list(G.nodes)[0] # zde bude nejblizsi bod z predchoziho vypoctu
+end_point = list(G.nodes)[20] # zde bude nejblizsi bod z predchoziho vypoctu
+
+# vypocet nejkratsi cesty
+path = nx.shortest_path(G, start_point, end_point, weight='length')
+
+
+### pro kontrolu vykresleni cesty do grafu
+memnode = path[0]
+for v in path[1:]:
+    G.edges[(memnode, v)]['path'] = True
+    memnode = v
+
+edgecolors = []
+for e in G.edges:
+    if 'path' in G.edges[e]:
+        edgecolors.append('r')
+    else:
+        edgecolors.append('k')
 
 # logicke usporadani/vykresleni grafu
 pos = {n:n for n in G.nodes}
 
 # vykresleni grafu
-nx.draw(G, pos=pos)
+nx.draw(G, pos=pos, edge_color=edgecolors)
 plt.show()
