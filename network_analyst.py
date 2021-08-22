@@ -54,12 +54,9 @@ given_info = load_info() # zde je entice s overenymi vstupnimi udaji
 # print(given_info)
 
 gdf_object = given_info[0]
-# print(gdf_object)
 output = given_info[1]
 coords_start = given_info[2:4]
-# print("start", coords_start)
 coords_end = given_info[4:6]
-# print("end", coords_end)
 
 
 ### vytvoreni grafu
