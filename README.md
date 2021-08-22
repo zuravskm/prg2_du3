@@ -5,8 +5,8 @@ funkce vraci entici, ve ktery je otevrana vstupni sit komunikaci jako geopandas 
 Cestu k vystupnimu souboru bych overoval az pri ukladani. 
 Good luck, ja se k vam pridam a budu se snazit byti uzitecnym. :D klidne mi toho nechte hodne a neco tezkyho :D 
 
-Markéta: Dnešní update - přidaly jsme tvorbu grafu, funguje vykreslení grafu. 
-Dále k řešení - logické uspořádání grafu, nalezení nejbližšího uzlu zadaným bodům. (pokusím se vyřešit o víkendu)
+Markéta: Update - přidaly jsme tvorbu grafu, funguje vykreslení grafu, logické uspořádání grafu. 
+Dále k řešení - nalezení nejbližšího uzlu zadaným bodům. (pokusím se vyřešit o víkendu)
 
 
 ([odkaz na zadání](https://github.com/xtompok/prg2_20/tree/main/du03))
