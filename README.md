@@ -5,8 +5,13 @@ funkce vraci entici, ve ktery je otevrana vstupni sit komunikaci jako geopandas 
 Cestu k vystupnimu souboru bych overoval az pri ukladani. 
 Good luck, ja se k vam pridam a budu se snazit byti uzitecnym. :D klidne mi toho nechte hodne a neco tezkyho :D 
 
-Markéta: Update - přidaly jsme tvorbu grafu, výpočet nejkratší cesty; funguje vykreslení grafu, logické uspořádání grafu (což bude dle zadání asi jen pro naši kontrolu). 
-Dále k řešení - nalezení nejbližších bodů na síti zadaným bodům. (pokusím se vyřešit o víkendu)
+Markéta: Update - přidaly jsme tvorbu grafu, výpočet nejkratší cesty; funguje vykreslení grafu, logické uspořádání grafu (asi jen pro naši kontrolu, když děláme konzolovou variantu aplikace). 
+
+
+Dále k řešení 
+- nalezení nejbližších bodů na síti zadaným bodům (pokusím se vyřešit o víkendu)
+- export vysledne cesty do GeoJSON
+- bonusy :)
 
 
 Testová data jsou v souboru testdata.geojson (jsou to data Holešovic ze cvičení :) ).
