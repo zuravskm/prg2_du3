@@ -16,7 +16,7 @@ Dokumentace ke konzolové aplikaci pro vyhledání nejkratší cesty mezi dvěma
 Funkční rozhranní konzolové aplikace je: `network_analyst.py --net <vstupni_soubor> --out <vystupni_soubor> --from <lat> <lon> --to <lat> <lon>`. Program má tedy celkem 6 vstupů, jejichž načtení a kontrolu provádí funkce `load_data`. V případě, že jsou zadány vstupy chybně (neplatná cesta k souboru, chybně zadané souřadnice), program vypíše chybovou hlášku a skončí.  
 
 #### Data
-Potřebným formátem vstupních dat je .shp nebo .geojson. Souřadnice počátečního a koncového bodu cesty se zadává ve tvaru `lat` `lon`.
+Potřebným formátem vstupních dat je .shp nebo .geojson. Souřadnice počátečního a koncového bodu cesty se zadávají ve tvaru `lat` `lon`.
 
 Jako testová data byly použity dvě datové sady: 
 - síť silnic (soubor silnice_data50_singl.shp),
