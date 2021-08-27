@@ -26,7 +26,7 @@ Jako testová data byly použity dvě datové sady:
 
 
 #### Hledání nejkratší cesty
-
+Pomocí funkce `shortest_path` z knihovny NetworkX je nalezena nejkratší cesta mezi zadanými body. Pokud taková cesta neexistuje (může nastat v případě, že nejbližší body na síti k zadaným bodům nejsou propojeny zadanou silniční sítí), program vypíše informaci o chybě a ukončí se. 
 
 #### Uložení výstupu
 Výstupem je nalezená nejkratší cesta, která je uložena jako GeoJSON. Ukládání provádí funkce `save_output()`...
