@@ -10,8 +10,10 @@ Program nepodporuje multipart geometrii. Pokud Vaše data obsahují multipart li
 Výsledný geojson soubor nemá explicitně vepsán souřadnicový systém. Souřadnicový systém ve výstupním geojsonu je stejný jako ve vstupních liniových datech, při vizualizaci např. v QGISu je nutné nejdřív určit použitý CRS --> Layer CRS --> Set layer CRS.
 
 ## Vývojářská dokumentace
-#### Vstupy
+Dokumentace ke konzolové aplikaci pro vyhledání nejkratší cesty mezi dvěma body. 
 
+#### Vstupy
+Funkční rozhranní konzolové aplikace je: `network_analyst.py --net <vstupni_soubor> --out <vystupni_soubor> --from <lat> <lon> --to <lat> <lon>`. Program má tedy celkem 6 vstupů, jejichž načtení a kontrolu provádí funkce `load_data`. V případě, že jsou zadány vstupy chybně (neplatná cesta k souboru, chybně zadané souřadnice), program vypíše chybovou hlášku a skončí.  
 
 #### Data
 Vhodným formátem vstupních dat je .shp nebo .geojson. Jako testová data byly použity dvě datové sady: 
