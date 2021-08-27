@@ -1,9 +1,9 @@
 # Vyhledávač cest
 ## Uživatelská dokumentace
 Program umí vyhledat cestu mezi 2 body v zadaných datech. Výslednou nejkratší cestu uloží jako *.geojson. Pro spuštění programu stačí zavolat:
-  `network_analyst.py --net <vstupni_soubor> --out <vystupni_soubor> --from <lat> <lon> --to <lat> <lon>`, kde net je vstupní soubor (*.shp nebo *.geojson) s vektorovou sítí silnic, out je výstupní geojson soubor s výslednou cestou a from a to jsou počáteční a koncový bod zadaný s pomocí zeměpisných souřadnic ve WGS84. Při výpočtu nejbližší trasy je uvažována vzdálenost mezi lomovými body silnic. 
+  `network_analyst.py --net <vstupni_soubor> --out <vystupni_soubor> --from <lat> <lon> --to <lat> <lon>`, kde `net` je vstupní soubor (*.shp nebo *.geojson) s vektorovou sítí silnic, `out` je výstupní geojson soubor s výslednou cestou a `from` a `to` jsou počáteční a koncový bod zadaný s pomocí zeměpisných souřadnic ve WGS84. Při výpočtu nejbližší trasy je uvažována vzdálenost mezi lomovými body silnic. 
 #### Poznámka 1: 
-výpočet je vhodné provádět pouze na datech v rovinných X, Y souřadnicích, ne v zeměpisných souřadnicích.
+Výpočet je vhodné provádět pouze na datech v rovinných X, Y souřadnicích, ne v zeměpisných souřadnicích.
 #### Poznámka 2: 
 Program nepodporuje multipart geometrii. Pokud Vaše data obsahují multipart linie, převeďte je např. v QGISu všechny na singlepart.
 #### Poznámka 3: 
