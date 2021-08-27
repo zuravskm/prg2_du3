@@ -14,7 +14,9 @@ Výsledný geojson soubor nemá explicitně vepsán souřadnicový systém. Sou�
 
 
 #### Data
-
+Vhodným formátem vstupních dat je .shp nebo .geojson. Jako testová data byly použity dvě datové sady: 
+- síť silnic (soubor silnice_data50_singl.shp),
+- síť ulic (testdata_utm.geojson). 
 
 #### Nalezení nejbližších bodů na síti
 
