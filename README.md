@@ -29,4 +29,4 @@ Jako testová data byly použity dvě datové sady:
 
 
 #### Uložení výstupu
-
+Výstupem je nalezená nejkratší cesta, která je uložena jako GeoJSON. Ukládání provádí funkce `save_output()`...
