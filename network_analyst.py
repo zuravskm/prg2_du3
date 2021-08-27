@@ -9,13 +9,20 @@ import json
 
 def load_info():
 
-    # test data:
-    input_path = "data/silnice_data50_singl.shp"  #sys.argv[1] ve finalnim skriptu zde budou argumenty z prikazovy radky -- sys.argv 
+    input_path = sys.argv[1]
+    output_path = sys.argv[2]
+    start_lat = sys.argv[3]
+    start_lon = sys.argv[4]
+    end_lat = sys.argv[5]
+    end_lon = sys.argv[6]
+
+    # path Praha - Aš:
+    """input_path = "data/silnice_data50_singl.shp"  #sys.argv[1]
     output_path = "data/output.geojson" #sys.argv[2]
     start_lat = 50.0864 #sys.argv[3] Praha
     start_lon = 14.4821 #sys.argv[4]
     end_lat = 50.2244 #sys.argv[5] Aš
-    end_lon = 12.1839 #sys.argv[6]
+    end_lon = 12.1839 #sys.argv[6]"""
 
     # holesovice
     """input_path = "data/testdata_utm.geojson"
@@ -25,7 +32,9 @@ def load_info():
     end_lat = 50.102948 #sys.argv[5]
     end_lon = 14.442816 #sys.argv[6]"""
 
-    """# holesovice 2
+    # holesovice 2
+    """input_path = "data/testdata_utm.geojson"
+    output_path = "data/output.geojson" #sys.argv[2]
     start_lat = 50.103600774 #sys.argv[3]
     start_lon = 14.4436590254 #sys.argv[4]
     end_lat = 50.1009953013 #sys.argv[5]
@@ -85,31 +94,6 @@ def save_output(line, targed_file):
         print("Inappropriate path to output file. Can't write to given directory, permission denied.")
         quit()
 
-"""def save_point(point_list):
-    features = []
-    for point in point_list:
-        line_string = {
-        "type": "Feature",
-        "properties": {"type": "xxx"},
-        "geometry": {
-            "type": "Point",
-            "coordinates": point
-        }     
-        }
-        features.append(line_string)
-    gj_structure = {"type":"FeatureCollection"}
-    gj_structure["features"] = features
-
-    # save output geojson file:
-    try:
-        with open(points.geojson, "w", encoding = "utf-8") as f:
-            json.dump(gj_structure,f, indent = 2)
-    except FileNotFoundError:
-        print("Inappropriate path to output file.")
-        quit()
-    except PermissionError:
-        print("Inappropriate path to output file. Can't write to given directory, pemission denied.")
-        quit()"""
 ###########################################################################
 
 # load and check data
