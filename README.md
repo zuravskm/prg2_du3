@@ -18,9 +18,9 @@ Funkční rozhranní konzolové aplikace je: `network_analyst.py --net <vstupni_
 #### Data
 Potřebným formátem vstupních dat je .shp nebo .geojson. Souřadnice počátečního a koncového bodu cesty se zadávají v zeměpisných souřadnicích.
 
-Jako testová data byly použity dvě datové sady: 
-- síť silnic (soubor silnice_data50_singl.shp),
-- síť ulic (testdata_utm.geojson). 
+Jako testová data byly použity dvě různě velké datové sady: 
+- větší datová sada - síť silnic (soubor silnice_data50_singl.shp),
+- menší datová sada - síť ulic (testdata_utm.geojson). 
 
 #### Nalezení nejbližších bodů na síti
 
