@@ -31,5 +31,5 @@ Skript nejprve načte vstupy od uživatele s pomocí funkce `load_data`. Násled
 Potřebným formátem vstupních dat je .shp nebo .geojson. Souřadnice počátečního a koncového bodu cesty se zadávají v zeměpisných souřadnicích.
 
 Jako testová data byly použity dvě různě velké datové sady: 
-- větší datová sada - síť silnic (soubor silnice_data50_singl.shp) - výřez silnic z Dat 50 (poskytuje ČUZK),,
-- menší datová sada - síť ulic (testdata_utm.geojson) - výřez silnic z dat OpenStreetMap (získaná s pomocí Overpass turbo).. 
+- větší datová sada - síť silnic (soubor silnice_data50_singl.shp) - výřez silnic z Dat 50 (poskytuje ČUZK),
+- menší datová sada - síť ulic (testdata_utm.geojson) - výřez silnic z dat OpenStreetMap (získaná s pomocí Overpass turbo).
