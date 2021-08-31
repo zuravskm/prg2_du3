@@ -24,8 +24,8 @@ def load_info():
     end_lat = 50.2244 #sys.argv[5] Aš
     end_lon = 12.1839 #sys.argv[6]"""
 
-    # holesovice
-    """input_path = "data/testdata_utm.geojson"
+    # holesovice - wgs84
+    """input_path = "data/testdata_wgs84.geojson"
     output_path = "data/output.geojson" #sys.argv[2]
     start_lat = 50.103246 #sys.argv[3] 
     start_lon = 14.455911 #sys.argv[4]
@@ -60,11 +60,9 @@ def load_info():
         print("Inappropriate number input. Use integer of float for latitude and longitude.")
         quit()
 
-    return (input, output_path, start_lat, start_lon, end_lat, end_lon)
+    return input, output_path, (start_lat, start_lon), (end_lat, end_lon)
 
-def wgs2cartestian(gdf_o, start, end):
-    used_crs = gdf_o.crs
-    used_crs != "epsg:4326"
+def wgs2cartestian(used_crs, start, end):
     transformer = Transformer.from_crs("epsg:4326", used_crs, always_xy=True)
     #print(used_crs)
     start = list(transformer.transform(start[1], start[0]))
@@ -72,16 +70,16 @@ def wgs2cartestian(gdf_o, start, end):
     return start, end
 
 def save_output(line, targed_file):
-    line_string = {
+    gj_structure = {"type":"FeatureCollection",
+    "features": [{
       "type": "Feature",
       "properties": {"type": "shortest_path"},
       "geometry": {
         "type": "LineString",
         "coordinates": line
       }     
+    }]
     }
-    gj_structure = {"type":"FeatureCollection"}
-    gj_structure["features"] = [line_string]
 
     # save output geojson file:
     try:
@@ -98,22 +96,44 @@ def save_output(line, targed_file):
 
 # load and check data
 print("Loading input data...")
-given_info = load_info() # zde je entice s overenymi vstupnimi udaji
+gdf_object, path_output, coords_start, coords_end = load_info()
 print("Data loaded.")
-gdf_object = given_info[0]
-path_output = given_info[1]
-coords_start = given_info[2:4]
-coords_end = given_info[4:6]
 
 print("Reprojecting GPS coordinates...")
 # reproject input points from wgs84 to the same coordinate system as given roads vector data
-start_reprojected, end_reprojected = wgs2cartestian(gdf_object, coords_start, coords_end)
+crs = gdf_object.crs
+if crs == "epsg:4326":
+    gdf_object = gdf_object.to_crs("epsg:3857") # reproject to WGS-84 pseudo_mercator (commonly used in digital maps)
+    start_reprojected, end_reprojected = wgs2cartestian("epsg:3857", coords_start, coords_end)
+    print("\n")
+    print("WARNING: WGS-84 (GPS coordinates) on road input detected. All computations will be done in WGS-84 Web mercator.")
+    print("Output will be saved in Web Mercator. Dont't forget to set CRS properly during visualisation in QGIS to Web Mercator (EPSG 3857).")
+    print("\n")
+else:
+    start_reprojected, end_reprojected = wgs2cartestian(crs, coords_start, coords_end)
 print("Coordinates reprojected.")
-
 print("Creating graph...")
-first_iter = True
+
 # create graph
 G = nx.Graph()
+
+# measuring distance - inicialization:
+try:
+    # first feature (line-road):
+    feat = list(gdf_object.iterrows())[0]
+    # first point of first feature:
+    first_coor = feat[1]["geometry"].coords[0]
+
+    start_nearest = first_coor
+    end_nearest = first_coor
+
+    start_dist = math.hypot((start_reprojected[0]-start_nearest[0]),(start_reprojected[1]-start_nearest[1]))
+    end_dist = math.hypot((end_reprojected[0]-end_nearest[0]),(end_reprojected[1]-end_nearest[1]))
+
+except NotImplementedError:
+        print("Data contains multipart geometries, which is not supported. Please, export yout data as single part geometry.")
+        quit()
+
 # iterator
 for idx,r in gdf_object.iterrows():
     # Remember last point for creating edges
@@ -123,16 +143,18 @@ for idx,r in gdf_object.iterrows():
         print("Data contains multipart geometries, which is not supported. Please, export yout data as single part geometry.")
         quit()
 
-    if first_iter:
-        start_nearest = mempoint#list(G.nodes)[0]
-        end_nearest = mempoint#list(G.nodes)[0]
+    # test first point of each line (road)
+    start_test = math.hypot((start_reprojected[0]-mempoint[0]),(start_reprojected[1]-mempoint[1]))
+    end_test = math.hypot((end_reprojected[0]-mempoint[0]),(end_reprojected[1]-mempoint[1]))
+    
+    if (start_test < start_dist):
+        start_nearest = mempoint
+        start_dist = start_test
 
-        start_dist = math.hypot((start_reprojected[0]-start_nearest[0]),(start_reprojected[1]-start_nearest[1]))
-        end_dist = math.hypot((end_reprojected[0]-end_nearest[0]),(end_reprojected[1]-end_nearest[1]))
+    if (end_test < end_dist):
+        end_nearest = mempoint
+        end_dist = end_test
 
-        first_iter = False
-
-    first_inner_iter = True
     # Add edges (starting from second point, first we have in mempoint)
     for point in r.geometry.coords[1:]:
         # Point is a tuple containing coordinates -> it can be used as node name
@@ -145,53 +167,28 @@ for idx,r in gdf_object.iterrows():
         # Update the last point
         mempoint = point
 
-        # find nearest point on graph for start and end point
-        if first_inner_iter: # just for first iteration
-            start_test = math.hypot((start_reprojected[0]-mempoint[0]),(start_reprojected[1]-mempoint[1]))
-            end_test = math.hypot((end_reprojected[0]-mempoint[0]),(end_reprojected[1]-mempoint[1]))
-            
-            if (start_test < start_dist):
-                start_nearest = mempoint
-                start_dist = start_test
+        # for any other point of road (from second point to last point)
+        start_test = math.hypot((start_reprojected[0]-mempoint[0]),(start_reprojected[1]-mempoint[1]))
+        end_test = math.hypot((end_reprojected[0]-mempoint[0]),(end_reprojected[1]-mempoint[1]))
+        
+        if (start_test<start_dist):
+            start_nearest = mempoint
+            start_dist = start_test
 
-            if (end_test < end_dist):
-                end_nearest = mempoint
-                end_dist = end_test
-            
-            start_test = math.hypot((start_reprojected[0]-r.geometry.coords[0][0]),(start_reprojected[1]-r.geometry.coords[0][1]))
-            end_test = math.hypot((end_reprojected[0]-r.geometry.coords[0][0]),(end_reprojected[1]-r.geometry.coords[0][1]))
-            
-            if (start_test < start_dist):
-                start_nearest = r.geometry.coords[0]
-                start_dist = start_test
+        if (end_test<end_dist):
+            end_nearest = mempoint
+            end_dist = end_test
 
-            if (end_test < end_dist):
-                end_nearest = r.geometry.coords[0]
-                end_dist = end_test
-
-            first_inner_iter = False
-
-        else: # for any other iteration
-            start_test = math.hypot((start_reprojected[0]-mempoint[0]),(start_reprojected[1]-mempoint[1]))
-            end_test = math.hypot((end_reprojected[0]-mempoint[0]),(end_reprojected[1]-mempoint[1]))
-            
-            if (start_test<start_dist):
-                start_nearest = mempoint
-                start_dist = start_test
-
-            if (end_test<end_dist):
-                end_nearest = mempoint
-                end_dist = end_test
 print("Graph created.")
 
-print("Finding shortest path...")
-# compute shortest path
+print("Finding closes path...")
+# compute closest path
 try:
     path_line = nx.shortest_path(G, start_nearest, end_nearest, weight='length')
 except nx.exception.NetworkXNoPath:
     print("Can't find path between selected points. Road network is not connected between them.")
     quit()
-print("Path found...")
+print("Path founded...")
 
 print("Saving output...")
 # build and save GeoJson:
@@ -203,17 +200,14 @@ memnode = path_line[0]
 for v in path_line[1:]:
     G.edges[(memnode, v)]['path'] = True
     memnode = v
-
 edgecolors = []
 for e in G.edges:
     if 'path' in G.edges[e]:
         edgecolors.append('r')
     else:
         edgecolors.append('k')
-
 # logicke usporadani/vykresleni grafu
 pos = {n:n for n in G.nodes}
-
 # vykresleni grafu
 nx.draw(G, pos=pos, edge_color=edgecolors)
 plt.show()"""
