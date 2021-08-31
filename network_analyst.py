@@ -191,7 +191,7 @@ try:
 except nx.exception.NetworkXNoPath:
     print("Can't find path between selected points. Road network is not connected between them.")
     quit()
-print("Path founded...")
+print("Path found...")
 
 print("Saving output...")
 # build and save GeoJson:
