@@ -184,8 +184,8 @@ for idx,r in gdf_object.iterrows():
                 end_dist = end_test
 print("Graph created.")
 
-print("Finding closes path...")
-# compute closest path
+print("Finding shortest path...")
+# compute shortest path
 try:
     path_line = nx.shortest_path(G, start_nearest, end_nearest, weight='length')
 except nx.exception.NetworkXNoPath:
