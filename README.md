@@ -37,5 +37,5 @@ Potřebným formátem vstupních dat je *.shp nebo *.GeoJSON. Souřadnice počá
 
 Jako testová data byly použity dvě různě velké datové sady: 
 - větší datová sada - síť silnic (soubor silnice_data50_singl.shp) - výřez silnic z Dat 50 (poskytuje ČUZK),
-- menší datová sada - síť ulic (testdata_utm.geojson) - výřez silnic z dat OpenStreetMap (získaná s pomocí Overpass turbo).
+- menší datová sada - síť ulic (testdata_utm.geojson) - výřez silnic z dat OpenStreetMap (získaná s pomocí Overpass turbo),
 - menší datová sada - síť ulic (testdata_wgs84.geojson) - výřez silnic z dat OpenStreetMap (získaná s pomocí Overpass turbo).
