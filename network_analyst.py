@@ -9,12 +9,44 @@ import json
 
 def load_info():
 
-    input_path = sys.argv[1]
+    """input_path = sys.argv[1]
     output_path = sys.argv[2]
     start_lat = sys.argv[3]
     start_lon = sys.argv[4]
     end_lat = sys.argv[5]
-    end_lon = sys.argv[6]
+    end_lon = sys.argv[6]"""
+
+    # zavedení parseru vstupu
+    parser = ArgumentParser()
+
+    # pridani povinnych prepinacu (prepinace umoznuji zadavani v libovolnem poradi)
+    parser.add_argument("-i", "--input",
+                    required=True,
+                    help="enter the path to the input file")
+
+    parser.add_argument("-o", "--output",
+                    required=True,
+                    help="enter the path to the output file")
+
+    parser.add_argument("-s1", "--start_lat",
+                    required=True,
+                    help="enter the latitude of the start point")
+    
+    parser.add_argument("-s2", "--start_lon",
+                    required=True,
+                    help="enter the longitude of the start point")
+
+    parser.add_argument("-e1", "--end_lat",
+                    required=True,
+                    help="enter the latitude of the end point")
+    
+    parser.add_argument("-e2", "--end_lon",
+                    required=True,
+                    help="enter the longitude of the end point")
+    
+    # zparsování vstupu
+    args = parser.parse_args()
+    # print(args)
 
     # path Praha - Aš:
     """input_path = "data/silnice_data50_singl.shp"  #sys.argv[1]
@@ -42,25 +74,25 @@ def load_info():
 
     # input path to file
     try:
-        input = geopandas.read_file(input_path)
+        input = geopandas.read_file(args.input)
     except fiona.errors.DriverError:
         print("Inappropriate path to input file.")
         quit()
 
     # test coordinates
     try:
-        if (float(start_lat) > 90) or (float(start_lat) < -90) or (float(end_lat) > 90) or (float(end_lat) < -90):
+        if (float(args.start_lat) > 90) or (float(args.start_lat) < -90) or (float(args.end_lat) > 90) or (float(args.end_lat) < -90):
             print("Inappropriate latitude input. Program is over.")
             quit()
 
-        if (float(start_lon) > 180) or (float(start_lon) < -180) or (float(end_lon) > 180) or (float(end_lon) < -180):
+        if (float(args.start_lon) > 180) or (float(args.start_lon) < -180) or (float(args.end_lon) > 180) or (float(args.end_lon) < -180):
             print("Inappropriate longitude input. Program is over.")
             quit()
     except ValueError:
         print("Inappropriate number input. Use integer or float for latitude and longitude.")
         quit()
 
-    return input, output_path, (start_lat, start_lon), (end_lat, end_lon)
+    return input, args.output, (args.start_lat, args.start_lon), (args.end_lat, args.end_lon)
 
 def wgs2cartesian(used_crs, start, end):
     transformer = Transformer.from_crs("epsg:4326", used_crs, always_xy=True)
