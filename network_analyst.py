@@ -57,7 +57,7 @@ def load_info():
             print("Inappropriate longitude input. Program is over.")
             quit()
     except ValueError:
-        print("Inappropriate number input. Use integer of float for latitude and longitude.")
+        print("Inappropriate number input. Use integer or float for latitude and longitude.")
         quit()
 
     return input, output_path, (start_lat, start_lon), (end_lat, end_lon)
