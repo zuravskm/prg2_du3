@@ -2,6 +2,9 @@
 ## Uživatelská dokumentace
 Program umí vyhledat cestu mezi 2 body v zadaných datech. Výslednou nejkratší cestu uloží jako *.GeoJSON. Pro spuštění programu stačí zavolat:
   `network_analyst.py "input_path" "output_path" start_lat start_lon end_lat end_lon`, kde `"input_path"` je cesta ke vstupnímu souboru, `"output_path"` cesta k výstupnímu souboru a `star_lat` `star_lon` `end_lat` `end_lon` jsou počáteční a koncový bod zadaný s pomocí zeměpisných souřadnic ve WGS-84. Při výpočtu nejbližší trasy je uvažována vzdálenost mezi lomovými body silnic. 
+
+OPRAVA: Program umí vyhledat cestu mezi 2 body v zadaných datech. Výslednou nejkratší cestu uloží jako *.GeoJSON. Pro spuštění programu stačí zavolat: `network_analyst.py se šesti povinnými parametry. Parametry lze zadávat v libovolném pořadí a dvěma způsoby. Vstupní soubor lze zadat po zavolání `-i path`, nebo `input='path'`, výstupní soubor `-o path`, nebo `output='path'`, souřadnice počátečního bodu `-s1 number`, nebo `start_lat='number'` a `-s2 number`, nebo `start_lon='number'` a analogicky souřadnice koncového bodu `-e1 number`, nebo `end_lat='number'` a `-e2 number`, nebo `end_lon='number'`. Po zavolání příkazu -h program vypíše nápovědu k zadávání vstupů.
+
 #### Poznámka 1: 
 Při zadání vstupních dat silnic ve WGS-84 v zeměpisných souřadnicích jsou tato data automaticky převeda do WGS-84 Web Mercator (EPSG 3857). V tomto CRS je i výstupní GeoJSON. 
 #### Poznámka 2: 
@@ -16,6 +19,8 @@ Dokumentace ke konzolové aplikaci pro vyhledání nejkratší cesty mezi dvěma
 
 #### Vstupy
 Funkční rozhranní konzolové aplikace je: `network_analyst.py "input_path" "output_path" star_lat star_lon end_lat end_lon`. Program má tedy celkem 6 vstupů, jejichž načtení a kontrolu provádí funkce `load_data`. V případě, že jsou zadány vstupy chybně (neplatná cesta k souboru, chybně zadané souřadnice), program vypíše chybovou hlášku a skončí. Toto chování zajišťuje několik bloků s výjimkami. 
+
+OPRAVA: Vstupy jsou načítány pomocí modulu `argparse`. Funkční rozhranní konzolové aplikace je: `network_analyst.py input='path' output='path' start_lat='number' start_lon='number' end_lat='number' end_lon='number'`. Program má tedy celkem 6 vstupů, které mohou být zadány v libovolném pořadí a jejichž načtení a kontrolu provádí funkce `load_data`. V případě, že jsou zadány vstupy chybně (neplatná cesta k souboru, chybně zadané souřadnice), program vypíše chybovou hlášku a skončí. Toto chování zajišťuje několik bloků s výjimkami. 
 
 #### Další funkce
 `wgs2cartesian(gdf_o, start, end)`
