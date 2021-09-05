@@ -18,7 +18,7 @@ Na konci skriptu je zakomentována část kódu pro vykreslování grafu s nalez
 Dokumentace ke konzolové aplikaci pro vyhledání nejkratší cesty mezi dvěma body. Aplikace využívá knihovny pro práci s geodaty: NetworkX, GeoPandas, Proj a další.
 
 #### Vstupy
-Funkční rozhranní konzolové aplikace je: `network_analyst.py "input_path" "output_path" star_lat star_lon end_lat end_lon`. Program má tedy celkem 6 vstupů, jejichž načtení a kontrolu provádí funkce `load_data`. V případě, že jsou zadány vstupy chybně (neplatná cesta k souboru, chybně zadané souřadnice), program vypíše chybovou hlášku a skončí. Toto chování zajišťuje několik bloků s výjimkami. 
+Funkční rozhranní konzolové aplikace je: `network_analyst.py "input_path" "output_path" start_lat start_lon end_lat end_lon`. Program má tedy celkem 6 vstupů, jejichž načtení a kontrolu provádí funkce `load_data`. V případě, že jsou zadány vstupy chybně (neplatná cesta k souboru, chybně zadané souřadnice), program vypíše chybovou hlášku a skončí. Toto chování zajišťuje několik bloků s výjimkami. 
 
 OPRAVA: Vstupy jsou načítány pomocí modulu `argparse`. Funkční rozhranní konzolové aplikace je: `network_analyst.py input='path' output='path' start_lat='number' start_lon='number' end_lat='number' end_lon='number'`. Program má tedy celkem 6 vstupů, které mohou být zadány v libovolném pořadí a jejichž načtení a kontrolu provádí funkce `load_data`. V případě, že jsou zadány vstupy chybně (neplatná cesta k souboru, chybně zadané souřadnice), program vypíše chybovou hlášku a skončí. Toto chování zajišťuje několik bloků s výjimkami. 
 
