@@ -62,7 +62,7 @@ def load_info():
 
     return input, output_path, (start_lat, start_lon), (end_lat, end_lon)
 
-def wgs2cartestian(used_crs, start, end):
+def wgs2cartesian(used_crs, start, end):
     transformer = Transformer.from_crs("epsg:4326", used_crs, always_xy=True)
     #print(used_crs)
     start = list(transformer.transform(start[1], start[0]))
@@ -104,13 +104,13 @@ print("Reprojecting GPS coordinates...")
 crs = gdf_object.crs
 if crs == "epsg:4326":
     gdf_object = gdf_object.to_crs("epsg:3857") # reproject to WGS-84 pseudo_mercator (commonly used in digital maps)
-    start_reprojected, end_reprojected = wgs2cartestian("epsg:3857", coords_start, coords_end)
+    start_reprojected, end_reprojected = wgs2cartesian("epsg:3857", coords_start, coords_end)
     print("\n")
     print("WARNING: WGS-84 (GPS coordinates) on road input detected. All computations will be done in WGS-84 Web mercator.")
     print("Output will be saved in Web Mercator. Dont't forget to set CRS properly during visualisation in QGIS to Web Mercator (EPSG 3857).")
     print("\n")
 else:
-    start_reprojected, end_reprojected = wgs2cartestian(crs, coords_start, coords_end)
+    start_reprojected, end_reprojected = wgs2cartesian(crs, coords_start, coords_end)
 print("Coordinates reprojected.")
 print("Creating graph...")
 
