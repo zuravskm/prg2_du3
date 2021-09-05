@@ -16,7 +16,7 @@ def load_info():
     end_lat = sys.argv[5]
     end_lon = sys.argv[6]"""
 
-    # zavedení parseru vstupu
+    # zavedeni parseru vstupu
     parser = ArgumentParser()
 
     # pridani povinnych prepinacu (prepinace umoznuji zadavani v libovolnem poradi)
@@ -44,7 +44,7 @@ def load_info():
                     required=True,
                     help="enter the longitude of the end point")
     
-    # zparsování vstupu
+    # zparsovani vstupu
     args = parser.parse_args()
     # print(args)
 
