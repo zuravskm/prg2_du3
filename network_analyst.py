@@ -44,6 +44,11 @@ def load_info():
                     required=True,
                     help="enter the longitude of the end point")
     
+    """parser.add_argument("-g", "--graph",
+                    action="store_true",
+                    default=False,
+                    help="enter if you want to draw a graph")"""  # odkomentovat v pripade, ze funguje zadavani predchozich argumentu
+    
     # zparsovani vstupu
     args = parser.parse_args()
     # print(args)
@@ -91,7 +96,9 @@ def load_info():
     except ValueError:
         print("Inappropriate number input. Use integer or float for latitude and longitude.")
         quit()
-
+   
+    # odkomentovat v pripade, ze funguje zadavani predchozich argumentu
+    """return input, args.output, (args.start_lat, args.start_lon), (args.end_lat, args.end_lon), args.graph"""
     return input, args.output, (args.start_lat, args.start_lon), (args.end_lat, args.end_lon)
 
 def wgs2cartesian(used_crs, start, end):
@@ -129,6 +136,7 @@ def save_output(line, targed_file):
 # load and check data
 print("Loading input data...")
 gdf_object, path_output, coords_start, coords_end = load_info()
+"""gdf_object, path_output, coords_start, coords_end, graph = load_info()""" # odkomentovat v pripade, ze funguje zadavani predchozich argumentu
 print("Data loaded.")
 
 print("Reprojecting GPS coordinates...")
@@ -227,7 +235,25 @@ print("Saving output...")
 save_output(path_line, path_output)
 print("Output saved.")
 
-"""### pro kontrolu vykresleni cesty do grafu
+"""### pro kontrolu vykresleni cesty do grafu (nove)
+if graph is True:
+    memnode = path_line[0]
+    for v in path_line[1:]:
+        G.edges[(memnode, v)]['path'] = True
+        memnode = v
+    edgecolors = []
+    for e in G.edges:
+        if 'path' in G.edges[e]:
+            edgecolors.append('r')
+        else:
+            edgecolors.append('k')
+    # logicke usporadani/vykresleni grafu
+    pos = {n:n for n in G.nodes}
+    # vykresleni grafu
+    nx.draw(G, pos=pos, edge_color=edgecolors)
+    plt.show()"""
+
+"""### pro kontrolu vykresleni cesty do grafu (puvodni)
 memnode = path_line[0]
 for v in path_line[1:]:
     G.edges[(memnode, v)]['path'] = True
