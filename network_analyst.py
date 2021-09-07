@@ -45,10 +45,11 @@ def load_info():
                     help="enter the longitude of the end point")
     
     # pridani nepovinneho prepinace pro moznost vykresleni grafu
+    # odkomentovat v pripade, ze funguje zadavani predchozich argumentu
     """parser.add_argument("-g", "--graph",
                     action="store_true",
                     default=False,
-                    help="enter if you want to draw a graph")"""  # odkomentovat v pripade, ze funguje zadavani predchozich argumentu
+                    help="enter if you want to draw a graph")"""
     
     # zparsovani vstupu
     args = parser.parse_args()
@@ -137,7 +138,8 @@ def save_output(line, targed_file):
 # load and check data
 print("Loading input data...")
 gdf_object, path_output, coords_start, coords_end = load_info()
-"""gdf_object, path_output, coords_start, coords_end, graph = load_info()""" # odkomentovat v pripade, ze funguje zadavani predchozich argumentu
+# odkomentovat v pripade, ze funguje zadavani predchozich argumentu
+"""gdf_object, path_output, coords_start, coords_end, graph = load_info()"""
 print("Data loaded.")
 
 print("Reprojecting GPS coordinates...")
@@ -236,7 +238,7 @@ print("Saving output...")
 save_output(path_line, path_output)
 print("Output saved.")
 
-"""### pro kontrolu vykresleni cesty do grafu (nove)
+"""### pro kontrolu vykresleni cesty do grafu (nove, pokud funguje zadavani predchozich argumentu)
 if graph is True:
     memnode = path_line[0]
     for v in path_line[1:]:
