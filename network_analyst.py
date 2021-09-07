@@ -45,7 +45,7 @@ def load_info():
                     help="enter the longitude of the end point")
     
     # pridani nepovinneho prepinace pro moznost vykresleni grafu
-    # odkomentovat v pripade, ze funguje zadavani predchozich argumentu
+    # odkomentovat v pripade, ze funguje zadavani predchozich argumentu (+ pripsat do dokumentace)
     """parser.add_argument("-g", "--graph",
                     action="store_true",
                     default=False,
