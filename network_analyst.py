@@ -1,3 +1,4 @@
+import sys
 import fiona
 import geopandas
 import networkx as nx
@@ -7,61 +8,48 @@ import matplotlib.pyplot as plt
 import json
 from argparse import ArgumentParser
 
-def load_info():
-
-    """input_path = sys.argv[1]
-    output_path = sys.argv[2]
-    start_lat = sys.argv[3]
-    start_lon = sys.argv[4]
-    end_lat = sys.argv[5]
-    end_lon = sys.argv[6]"""
-
-    # zavedeni parseru vstupu
+def parse_data():
+    # parser
     parser = ArgumentParser()
 
-    # pridani povinnych prepinacu (prepinace umoznuji zadavani v libovolnem poradi)
-    parser.add_argument("-i", "--input",
+    parser.add_argument("--net",
                     required=True,
                     help="enter the path to the input file")
 
-    parser.add_argument("-o", "--output",
+    parser.add_argument("--out",
                     required=True,
                     help="enter the path to the output file")
 
-    parser.add_argument("-s1", "--start_lat",
+    parser.add_argument("--from",
+                    nargs='+',
                     required=True,
-                    help="enter the latitude of the start point")
-    
-    parser.add_argument("-s2", "--start_lon",
-                    required=True,
-                    help="enter the longitude of the start point")
+                    help="enter the start point (lat, lon)")
 
-    parser.add_argument("-e1", "--end_lat",
+    parser.add_argument("--to",
+                    nargs='+',
                     required=True,
-                    help="enter the latitude of the end point")
-    
-    parser.add_argument("-e2", "--end_lon",
-                    required=True,
-                    help="enter the longitude of the end point")
-    
-    # pridani nepovinneho prepinace pro moznost vykresleni grafu
-    # odkomentovat v pripade, ze funguje zadavani predchozich argumentu (+ pripsat do dokumentace)
-    """parser.add_argument("-g", "--graph",
-                    action="store_true",
-                    default=False,
-                    help="enter if you want to draw a graph")"""
-    
-    # zparsovani vstupu
+                    help="enter the end point (lat, lon)")
+    # parse input
     args = parser.parse_args()
-    # print(args)
+    args = vars(args) # make dictionary
+    return args["net"], args["out"], args["from"], args["to"]
+
+def load_info():
+
+    input_path, output_path, start, end = parse_data()
+
+    start_lat = start[0]
+    start_lon = start[1]
+    end_lat = end[0]
+    end_lon = end[1]
 
     # path Praha - Aš:
     """input_path = "data/silnice_data50_singl.shp"  #sys.argv[1]
     output_path = "data/output.geojson" #sys.argv[2]
-    start_lat = 50.0864 #sys.argv[3] Praha
-    start_lon = 14.4821 #sys.argv[4]
-    end_lat = 50.2244 #sys.argv[5] Aš
-    end_lon = 12.1839 #sys.argv[6]"""
+    start_lat = "50.0864" #sys.argv[3] Praha
+    start_lon = "14.4821" #sys.argv[4]
+    end_lat = "50.2244" #sys.argv[5] Aš
+    end_lon = "12.1839" #sys.argv[6]"""
 
     # holesovice - wgs84
     """input_path = "data/testdata_wgs84.geojson"
@@ -79,29 +67,27 @@ def load_info():
     end_lat = 50.1009953013 #sys.argv[5]
     end_lon = 14.4529370504 #sys.argv[6]"""
 
+    # test coordinates
+    try:
+        if (float(start_lat) > 90) or (float(start_lat) < -90) or (float(end_lat) > 90) or (float(end_lat) < -90):
+            print("Inappropriate latitude input. Program is over.")
+            quit()
+
+        if (float(start_lon) > 180) or (float(start_lon) < -180) or (float(end_lon) > 180) or (float(end_lon) < -180):
+            print("Inappropriate longitude input. Program is over.")
+            quit()
+    except ValueError:
+        print("Inappropriate number input. Use integer of float for latitude and longitude.")
+        quit()
+
     # input path to file
     try:
-        input = geopandas.read_file(args.input)
+        input = geopandas.read_file(input_path)
     except fiona.errors.DriverError:
         print("Inappropriate path to input file.")
         quit()
 
-    # test coordinates
-    try:
-        if (float(args.start_lat) > 90) or (float(args.start_lat) < -90) or (float(args.end_lat) > 90) or (float(args.end_lat) < -90):
-            print("Inappropriate latitude input. Program is over.")
-            quit()
-
-        if (float(args.start_lon) > 180) or (float(args.start_lon) < -180) or (float(args.end_lon) > 180) or (float(args.end_lon) < -180):
-            print("Inappropriate longitude input. Program is over.")
-            quit()
-    except ValueError:
-        print("Inappropriate number input. Use integer or float for latitude and longitude.")
-        quit()
-   
-    # odkomentovat v pripade, ze funguje zadavani predchozich argumentu
-    """return input, args.output, (args.start_lat, args.start_lon), (args.end_lat, args.end_lon), args.graph"""
-    return input, args.output, (args.start_lat, args.start_lon), (args.end_lat, args.end_lon)
+    return input, output_path, (start_lat, start_lon), (end_lat, end_lon)
 
 def wgs2cartesian(used_crs, start, end):
     transformer = Transformer.from_crs("epsg:4326", used_crs, always_xy=True)
@@ -138,8 +124,6 @@ def save_output(line, targed_file):
 # load and check data
 print("Loading input data...")
 gdf_object, path_output, coords_start, coords_end = load_info()
-# odkomentovat v pripade, ze funguje zadavani predchozich argumentu
-"""gdf_object, path_output, coords_start, coords_end, graph = load_info()"""
 print("Data loaded.")
 
 print("Reprojecting GPS coordinates...")
@@ -238,25 +222,7 @@ print("Saving output...")
 save_output(path_line, path_output)
 print("Output saved.")
 
-"""### pro kontrolu vykresleni cesty do grafu (nove, pokud funguje zadavani predchozich argumentu)
-if graph is True:
-    memnode = path_line[0]
-    for v in path_line[1:]:
-        G.edges[(memnode, v)]['path'] = True
-        memnode = v
-    edgecolors = []
-    for e in G.edges:
-        if 'path' in G.edges[e]:
-            edgecolors.append('r')
-        else:
-            edgecolors.append('k')
-    # logicke usporadani/vykresleni grafu
-    pos = {n:n for n in G.nodes}
-    # vykresleni grafu
-    nx.draw(G, pos=pos, edge_color=edgecolors)
-    plt.show()"""
-
-"""### pro kontrolu vykresleni cesty do grafu (puvodni)
+"""### pro kontrolu vykresleni cesty do grafu
 memnode = path_line[0]
 for v in path_line[1:]:
     G.edges[(memnode, v)]['path'] = True
