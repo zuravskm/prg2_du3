@@ -1,7 +1,7 @@
 # Vyhledávač cest
 ## Uživatelská dokumentace
 Program umí vyhledat cestu mezi 2 body v zadaných datech. Výslednou nejkratší cestu uloží jako *.GeoJSON. Pro spuštění programu stačí zavolat:
-  `network_analyst.py --net "vstupni_soubor" --out "vystupni_soubor" --from lat lon --to lat lon`, kde `"input_path"` je cesta ke vstupnímu souboru, `"output_path"` cesta k výstupnímu souboru a `star_lat` `star_lon` `end_lat` `end_lon` jsou počáteční a koncový bod zadaný s pomocí zeměpisných souřadnic ve WGS-84. Při výpočtu nejbližší trasy je uvažována vzdálenost mezi lomovými body silnic. 
+  `network_analyst.py --net "vstupni_soubor" --out "vystupni_soubor" --from lat lon --to lat lon`, kde `"input_path"` je cesta ke vstupnímu souboru, `"output_path"` cesta k výstupnímu souboru a `lat` `lon` jsou počáteční a koncový bod zadaný s pomocí zeměpisných souřadnic ve WGS-84. Při výpočtu nejbližší trasy je uvažována vzdálenost mezi lomovými body silnic. 
 
 #### Poznámka 1: 
 Při zadání vstupních dat silnic ve WGS-84 v zeměpisných souřadnicích jsou tato data automaticky převeda do WGS-84 Web Mercator (EPSG 3857). V tomto CRS je i výstupní GeoJSON. 
